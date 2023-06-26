@@ -26,8 +26,9 @@ void quick_sort(int *array, size_t size)
 int partition(int *arr, int s, int e, size_t size)
 {
 	int k = s - 1, j = s, a = 0, pivot;
-	
+
 	pivot = arr[e];
+
 	for (; j < e; j++)
 	{
 		if (arr[j] < pivot)
