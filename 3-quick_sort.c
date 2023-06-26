@@ -1,76 +1,71 @@
 #include "sort.h"
-/**
-* swaper - Function swaps two numbers
-* @li: in array
-* @m: first index
-* @k: second index
-* Return: Nothing
-**/
-void s_wap(int *li, size_t m, size_t k)
-{
-	int t = li[m];
 
-	li[m] = li[k];
-	li[k] = t;
+/**
+* swaper - swap
+* @arr: array
+* @i: index
+* @j: index
+**/
+void swaper(int *arr, size_t i, size_t j)
+{
+	int tmp = arr[i];
+
+	arr[i] = arr[j];
+	arr[j] = tmp;
 }
 /**
- * p - Array partition
- *
- * @li:  in array
- * @s: the start index
- * @e: ending index
- * @sz: The size
- * Return: in Integer
+ * partition - selection----
+ * @arr: arg
+ * @low: arg
+ * @high: arg
+ * @size: size
+ * Return: int
  */
-int p(int *li, int s, int e, size_t sz)
+int partition(int *arr, int low, int high, size_t size)
 {
-	int pp = li[e], k = s - 1, j;
+	int pivot = arr[high], i = low - 1, j;
 
-	for (j = s; j <= e - 1; j++)
+	for (j = low; j <= high - 1; j++)
 	{
-		if (li[j] < pp)
+		if (arr[j] < pivot)
 		{
-			k++;
-			s_wap(li, k, j);
-			if (k != j)
-				print_array(li, sz);
+			i++;
+			swaper(arr, i, j);
+			if (i != j)
+				print_array(arr, size);
 		}
 	}
-	s_wap(li, k + 1, e);
-	print_array(li, sz);
-
-	return (k + 1);
+	swaper(arr, i + 1, high);
+	print_array(arr, size);
+	return (i + 1);
 }
 
 /**
-* q_sort - Function recursive
-* @li: array
-* @s: start index
-* @e: ending index
-* @sz: size of array
-* Return: Nothing
+* q_sort_helper - recursive quick sort
+* @array: array to sort
+* @low: l----
+* @high: ------
+* @size: size
 **/
-void q_sort(int *li, int s, int e, size_t sz)
+void q_sort_helper(int *arr, int low, int high, size_t size)
 {
-	int pp;
-
-	if (s < e)
+	if (low < high)
 	{
-		pp = p(li, s, e, sz);
-		q_sort(li, s, pp - 1, sz);
-		q_sort(li, pp + 1, e, sz);
+		int pivot = partition(arr, low, high, size);
+		q_sort_helper(arr, low, pivot - 1, size);
+		q_sort_helper(arr, pivot + 1, high, size);
 	}
 }
 
 /**
- * quick_sort - Sorts an array of integers
- * @array: Array pointer
- * @size: Size of the array
+ * quick_sort - quick sort
+ * @array: Pointer to the array to be sorted.
+ * @size: Size of the array.
 */
 void quick_sort(int *array, size_t size)
 {
 	if (!array || size < 2)
 		return;
 
-	q_sort(array, 0, size - 1, size);
+	q_sort_helper(array, 0, size - 1, size);
 }
