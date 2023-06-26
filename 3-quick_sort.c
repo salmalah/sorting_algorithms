@@ -1,11 +1,11 @@
 #include "sort.h"
-void quick_s(int *array, int lo, int hi, size_t size);
+void quick_s(int *array, int s, int e, size_t size);
 /**
  * quick_sort - function that sorts an array of integers
- *              in ascending order using the Quick sort algorithm
- * @array: array
- * @size: array's size
- * Return: void
+ *
+ * @array: In array
+ * @size: size of array
+ * Return: Nothing
  */
 void quick_sort(int *array, size_t size)
 {
@@ -16,58 +16,59 @@ void quick_sort(int *array, size_t size)
 }
 
 /**
- * partition - partition
- * @array: array
- * @lo: lower
- * @hi: higher
- * @size: array's size
- * Return: i
+ * partition - Fucntion partition
+ * @arr:  In array
+ * @s: starting index
+ * @e: ending index
+ * @size: size of arrau
+ * Return: in integer
  */
-int partition(int *array, int lo, int hi, size_t size)
+int partition(int *arr, int s, int e, size_t size)
 {
-	int i = lo - 1, j = lo;
-	int pivot = array[hi], aux = 0;
-
-	for (; j < hi; j++)
+	int k = s - 1, j = s, a = 0, pivot;
+	
+	pivot = arr[e];
+	for (; j < e; j++)
 	{
-		if (array[j] < pivot)
+		if (arr[j] < pivot)
 		{
-			i++;
-			if (array[i] != array[j])
+			k++;
+			if (arr[k] != arr[j])
 			{
-				aux = array[i];
-				array[i] = array[j];
-				array[j] = aux;
-				print_array(array, size);
+				a = arr[k];
+				arr[k] = arr[j];
+				arr[j] = a;
+				print_array(arr, size);
 			}
 		}
 	}
-	if (array[i + 1] != array[hi])
+	if (arr[k + 1] != arr[e])
 	{
-		aux = array[i + 1];
-		array[i + 1] = array[hi];
-		array[hi] = aux;
-		print_array(array, size);
+		a = arr[k + 1];
+		arr[k + 1] = arr[e];
+		arr[e] = a;
+		print_array(arr, size);
 	}
-	return (i + 1);
+
+	return (k + 1);
 }
 
 /**
- * quick_s - quick sort
- * @array: given array
- * @lo: lower
- * @hi:higher
+ * quick_s - Function recursive
+ * @array: an given array
+ * @s: starting index
+ * @e: ending index
  * @size: array's size
- * Return: void
+ * Return: rien
  */
-void quick_s(int *array, int lo, int hi, size_t size)
+void quick_s(int *array, int s, int e, size_t size)
 {
-	int pivot;
+	int p;
 
-	if (lo < hi)
+	if (s < e)
 	{
-		pivot = partition(array, lo, hi, size);
-		quick_s(array, lo, pivot - 1, size);
-		quick_s(array, pivot + 1, hi, size);
+		p = partition(array, s, e, size);
+		quick_s(array, s, p - 1, size);
+		quick_s(array, p + 1, e, size);
 	}
 }
