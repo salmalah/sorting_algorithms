@@ -1,36 +1,36 @@
 #include "sort.h"
+
+
 /**
- * insertion_sort_list - A function that sorts a doubly linked list of integers
- * in ascending order using the Insertion sort algorithm
- * @list: doubly linked list head pointer
- * Return: Nothing
+ * insertion_sort_list - Sorts list of integers
+ * @list: Pointer to the list to be sorted.
  */
+
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *c, *t, *k;
+	listint_t *i, *j, *tmp;
 
-	if (!*list || !list || (*list)->next == NULL)
+	if (!list || !*list)
 		return;
-	c = (*list)->next;
-	while (c)
+	i = (*list)->next;
+	while (i)
 	{
-		k = c;
-		c = c->next;
-		while (k->prev != NULL && k->prev->n > k->n  && k)
+		j = i;
+		i = i->next;
+		while (j && j->prev && j->prev->n > j->n)
 		{
-			t = k->prev;
-			t->next = k->next;
-			if (k->next)
-				k->next->prev = t;
-			k->next = t;
-			k->prev = t->prev;
-			if (!t->prev)
-				*list = k;
+			tmp = j->prev;
+			tmp->next = j->next;
+			if (j->next)
+				j->next->prev = tmp;
+			j->next = tmp;
+			j->prev = tmp->prev;
+			if (tmp->prev)
+				tmp->prev->next = j;
 			else
-				t->prev->next = k;
-			t->prev = k;
+				*list = j;
+			tmp->prev = j;
 			print_list(*list);
 		}
 	}
 }
-
