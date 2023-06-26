@@ -1,35 +1,33 @@
 #include "sort.h"
-
-
 /**
- * insertion_sort_list - Sorts list of integers
- * @list: Pointer to the list to be sorted.
+ * insertion_sort_list - Sorts list of integers in ascending order
+ * @list: Pointer to the head of the
+ * Return: Nothing
  */
-
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *i, *j, *tmp;
+	listint_t *k, *m, *tmp;
 
 	if (!list || !*list)
 		return;
-	i = (*list)->next;
-	while (i)
+	k = (*list)->next;
+	while (k != NULL)
 	{
-		j = i;
-		i = i->next;
-		while (j && j->prev && j->prev->n > j->n)
+		m = k;
+		k = k->next;
+		while (m != NULL && m->prev && m->prev->n > m->n)
 		{
-			tmp = j->prev;
-			tmp->next = j->next;
-			if (j->next)
-				j->next->prev = tmp;
-			j->next = tmp;
-			j->prev = tmp->prev;
-			if (tmp->prev)
-				tmp->prev->next = j;
+			new = m->prev;
+			new->next = m->next;
+			if (m->next)
+				m->next->prev = new;
+			m->next = new;
+			m->prev = new->prev;
+			if (new->prev)
+				new->prev->next = j;
 			else
-				*list = j;
-			tmp->prev = j;
+				*list = m;
+			new->prev = m;
 			print_list(*list);
 		}
 	}
