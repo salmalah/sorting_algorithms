@@ -6,7 +6,7 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *k, *m, *tmp;
+	listint_t *k, *m, *new;
 
 	if (!list || !*list)
 		return;
