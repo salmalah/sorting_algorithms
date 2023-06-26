@@ -15,7 +15,7 @@ void insertion_sort_list(listint_t **list)
 	while (c)
 	{
 		k = c;
-		while (k->prev != NULL && k->n < k->prev->n)
+		while (k->prev != NULL && k->n < k->prev->n && k)
 		{
 			k->prev->next = k->next;
 			if (k->next)
