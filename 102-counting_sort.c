@@ -1,68 +1,62 @@
 #include "sort.h"
 
 /**
- * get_max - Get the maximum value in an array of integers.
- * @array: An array of integers.
- * @size: The size of the array.
+ * m_ax - A function give max value in an array
+ * @arr: The array
+ * @n: size of the array
  *
  * Return: The maximum integer in the array.
  */
-int get_max(int *array, int size)
+int m_ax(int *arr, int n)
 {
-	int max, i;
+	int m, i;
 
-	for (max = array[0], i = 1; i < size; i++)
+	for (m = arr[0], i = 1; i < n; i++)
 	{
-		if (array[i] > max)
-			max = array[i];
+		if (arr[i] > m)
+			m = arr[i];
 	}
-
-	return (max);
+	return (m);
 }
-
 /**
- * counting_sort - Sort an array of integers in ascending order
- *                 using the counting sort algorithm.
- * @array: An array of integers.
- * @size: The size of the array.
- *
- * Description: Prints the counting array after setting it up.
+ * counting_sort - A fucntion Sort an array of integers in ascending order
+ * @array: An array
+ * @size:size of the array.
+ * Return: nothing
  */
 void counting_sort(int *array, size_t size)
 {
-	int *count, *sorted, max, i;
+	int *n, *sort, max, i;
 
-	if (array == NULL || size < 2)
+	if (!array || size < 2)
 		return;
-
-	sorted = malloc(sizeof(int) * size);
-	if (sorted == NULL)
+	sort = malloc(sizeof(int) * size);
+	if (!sort)
 		return;
-	max = get_max(array, size);
-	count = malloc(sizeof(int) * (max + 1));
-	if (count == NULL)
+	max = m_ax(array, size);
+	n = malloc(sizeof(int) * (max + 1));
+	if (!n)
 	{
-		free(sorted);
+		free(sort);
 		return;
 	}
-
 	for (i = 0; i < (max + 1); i++)
-		count[i] = 0;
+		n[i] = 0;
 	for (i = 0; i < (int)size; i++)
-		count[array[i]] += 1;
+		n[array[i]] += 1;
 	for (i = 0; i < (max + 1); i++)
-		count[i] += count[i - 1];
-	print_array(count, max + 1);
-
+		n[i] += n[i - 1];
+	print_array(n, max + 1);
 	for (i = 0; i < (int)size; i++)
 	{
-		sorted[count[array[i]] - 1] = array[i];
-		count[array[i]] -= 1;
+		sort[n[array[i]] - 1] = array[i];
+		n[array[i]] -= 1;
 	}
 
 	for (i = 0; i < (int)size; i++)
-		array[i] = sorted[i];
-
-	free(sorted);
-	free(count);
+	{
+		array[i] = sort[i];
+	}
+	free(sort);
+	free(n);
 }
