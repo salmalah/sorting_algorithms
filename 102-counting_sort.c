@@ -1,46 +1,52 @@
 #include "sort.h"
+#include <stdlib.h>
+#include <stdio.h>
+
 /**
-  * counting_sort - A function that sorts an array using counting algorithm
-  * @array: The array
-  * @size: size of the array.
-  * Return: Rien
+  * counting_sort - Afunction that sorts an array using counting algorithm.
+  * @array: The array to sort.
+  * @size: The length of the array.
+  * Return: Nothing.
   */
 void counting_sort(int *array, size_t size)
 {
-	size_t i;
-	int *n = NULL, m = 0, j = 0;
+	unsigned int i = 1;
+	int *counter = NULL, k = 0, j = 0;
 
-	if (!array || size < 2)
+	if (array == NULL || size < 2)
 		return;
-	m = array[0];
-	for (i = 1; i < size; i++)
+
+	k = array[0];
+	for (; i < size; i++)
 	{
-		if (array[i] > m)
-			m = array[i];
+		if (array[i] > k)
+			k = array[i];
 	}
-	n = malloc(sizeof(int) * (m + 1));
-	if (!n)
+
+	counter = malloc(sizeof(int) * (k + 1));
+	if (counter == NULL)
 		return;
-	for (j = 0; j <= m; j++)
-		n[j] = 0;
+
+	for (j = 0; j <= k; j++)
+		counter[j] = 0;
 	for (i = 0; i < size; i++)
-		n[array[i]] += 1;
-	for (j = 0; j < m; j++)
+		counter[array[i]] += 1;
+	for (j = 0; j < k; j++)
 	{
-		n[j + 1] += n[j];
-		printf("%d, ", n[j]);
+		counter[j + 1] += counter[j];
+		printf("%d, ", counter[j]);
 	}
-	n[j + 1] += n[j];
-	printf("%d\n", n[j + 1]);
+	counter[j + 1] += counter[j];
+	printf("%d\n", counter[j + 1]);
 	for (i = 0; i < size; i++)
 	{
-		j = n[array[i]] - 1;
+		j = counter[array[i]] - 1;
 		if (array[i] != array[j])
 		{
-			m = array[i];
+			k = array[i];
 			array[i] = array[j];
-			array[j] = m;
+			array[j] = k;
 		}
 	}
-	free(n);
+	free(counter);
 }
