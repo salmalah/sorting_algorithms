@@ -17,7 +17,7 @@ void merge_sort(int *array, size_t size)
 	b = malloc(sizeof(int) * size);
 	if (!b)
 		return;
-	for (f= 0; f < size; f++)
+	for (f = 0; f < size; f++)
 		b[f] = array[f];
 	merge_p(0, size, array, b);
 	free(b);
