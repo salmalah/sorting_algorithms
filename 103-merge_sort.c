@@ -1,7 +1,8 @@
 #include "sort.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+void merge(size_t lo, size_t mi, size_t hi, int *dest, int *src);
+void merge_partition(size_t lo, size_t hi, int *array, int *base);
 /**
  * merge_sort - A function that sorts an array using merge algorithm.
  * @array: The array to sort.
