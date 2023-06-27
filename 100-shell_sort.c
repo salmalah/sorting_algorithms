@@ -11,10 +11,10 @@ void shell_sort(int *array, size_t size)
 	size_t g, k, m;
 
 	g = 1;
-	if (!array || size < 2)
+	if (size < 2 || !array)
 		return;
 	while (g < size)
-		g = g * 3 + 1;
+		g = g * 3 + 1;;
 	g = (g - 1) / 3;
 	while (g > 0)
 	{
