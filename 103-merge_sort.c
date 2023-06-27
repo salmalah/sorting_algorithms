@@ -1,86 +1,83 @@
 #include "sort.h"
-#include <stdlib.h>
-#include <stdio.h>
 void merge(size_t lo, size_t mi, size_t hi, int *dest, int *src);
-void merge_partition(size_t lo, size_t hi, int *array, int *base);
+void merge_p(size_t l, size_t h, int *arr, int *c);
 /**
- * merge_sort - A function that sorts an array using merge algorithm.
- * @array: The array to sort.
- * @size: The size of the array.
- * Return: Nothing.
+ * merge_sort - A function that sorts an array using merge
+ * @array: The array
+ * @size: size of the array
+ * Return: Rien
  */
 void merge_sort(int *array, size_t size)
 {
-	size_t i = 0;
-	int *base = NULL;
+	size_t f;
+	int *b = NULL;
 
-	if (array == NULL || size < 2)
+	if (!array || size < 2)
 		return;
-	base = malloc(sizeof(int) * size);
-	if (base == NULL)
+	b = malloc(sizeof(int) * size);
+	if (!b)
 		return;
-	for (; i < size; i++)
-		base[i] = array[i];
-	merge_partition(0, size, array, base);
-	free(base);
+	for (f= 0; f < size; f++)
+		b[f] = array[f];
+	merge_p(0, size, array, b);
+	free(b);
 }
 
 /**
- * merge - A function that sorts the subarrays.
- * @lo: Lower index.
- * @mi: Middle index.
- * @hi: Higher index.
- * @dest: Destination for data.
- * @src: Input data.
- * Return: Nothing
+ * merge - A function that prints subarrays.
+ * @l: index lower
+ * @m: index midlle
+ * @h: index higher
+ * @des: Data destination
+ * @s: input data
+ * Return: rien
  */
-void merge(size_t lo, size_t mi, size_t hi, int *dest, int *src)
+void merge(size_t l, size_t m, size_t h, int *des, int *s)
 {
-	size_t i = 0, j = 0, k = 0;
+	size_t f = 0, j = 0, k = 0;
 
 	printf("Merging...\n");
 	printf("[left]: ");
-	print_array(src + lo, mi - lo);
+	print_array(s + l, m - l);
 	printf("[right]: ");
-	print_array(src + mi, hi - mi);
-	i = lo;
-	j = mi;
-	k = lo;
-		for (; k < hi; k++)
+	print_array(s + m, h - m);
+	f = l;
+	j = m;
+	k = l;
+		for (; k < h; k++)
 		{
-			if (i < mi && (j >= hi || src[i] <= src[j]))
+			if (f < m && (j >= h || s[f] <= s[j]))
 			{
-				dest[k] = src[i];
-				i++;
+				des[k] = s[f];
+				f++;
 			}
 			else
 			{
-				dest[k] = src[j];
+				des[k] = s[j];
 				j++;
 			}
 		}
 	printf("[Done]: ");
-	print_array(dest + lo, hi - lo);
+	print_array(des + l, h - l);
 }
-
 /**
- * merge_partition - A funtion that splits the array recursively.
- * @lo: Lower index.
- * @hi: Higher index.
- * @array: The array to sort.
- * @base: The copy of the array.
- * Return: Nothing.
+ * merge_p - A funtion that separet array
+ * @l: index loweer
+ * @h: index higher
+ * @arr: The array
+ * @c: The copy of arry
+ * Return: Rien
  */
-void merge_partition(size_t lo, size_t hi, int *array, int *base)
+void merge_p(size_t l, size_t h, int *arr, int *c)
 {
-	size_t mi = 0;
+	size_t x = 0;
 
-	if (hi - lo < 2)
+	if (h - l < 2)
 		return;
-	mi = (lo + hi) / 2;
-	merge_partition(lo, mi, array, base);
-	merge_partition(mi, hi, array, base);
-	merge(lo, mi, hi, array, base);
-	for (mi = lo; mi < hi; mi++)
-		base[mi] = array[mi];
+	x = (l + h) / 2;
+	merge_p(l, x, arr, c);
+	merge_p(x, h, arr, c);
+	merge(l, x, h, arr, c);
+	for (x = l; x < h; x++)
+		c[x] = arr[x];
 }
